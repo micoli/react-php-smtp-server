@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  php:
+    build:
+      context: ./.docker
+      args:
+        TIMEZONE: Europe/Paris
+    environment:
+      - DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db
+    volumes:
+     - ./:/app
+     - ./.docker/usr/local/etc/php-fpm.z/:/usr/local/etc/php-fpm.z/
+    ports:
+     - 8082:8081

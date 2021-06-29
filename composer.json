@@ -1,0 +1,52 @@
+{
+    "type": "library",
+    "name":  "micoli/react-php-smtp-server",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "ext-iconv": "*",
+        "ext-openssl": "*",
+        "composer/package-versions-deprecated": "1.11.99.2",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "nyholm/psr7": "^1.1",
+        "phpstan/phpstan": "^0.12.90",
+        "react/event-loop": "^1.1",
+        "react/http": "^0.8.3",
+        "react/socket": "^1.6",
+        "symfony/event-dispatcher": "5.2.*",
+        "symfony/uid": "5.2.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4",
+        "php-coveralls/php-coveralls": "^2.4",
+        "phpunit/phpunit": "^9.5"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Micoli\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Micoli\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "extra": {
+    }
+}

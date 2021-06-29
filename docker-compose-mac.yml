@@ -1,0 +1,28 @@
+version: '3.7'
+
+volumes:
+  vol-php:
+
+services:
+  php:
+    volumes:
+     - vol-php:/app
+
+x-mutagen:
+  sync:
+    defaults:
+      ignore:
+        vcs: true
+        paths:
+          - ".idea"
+      permissions:
+        defaultFileMode: 644
+        defaultDirectoryMode: 755
+    php:
+      alpha: "./"
+      beta: "volume://vol-php"
+      mode: "two-way-resolved"
+      configurationBeta:
+        permissions:
+          defaultOwner: "id:82"
+          defaultGroup: "id:82"

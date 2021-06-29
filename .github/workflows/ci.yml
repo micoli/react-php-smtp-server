@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  phpstan:
+    name: phpstan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0"
+
+      - name: Install composer dependencies
+        uses: "ramsey/composer-install@v1"
+
+      - name: Run phpstan
+        run: vendor/bin/phpstan analyze src --level=7
+
+  phpcs-fixer:
+    name: phpcs-fixer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0"
+
+      - name: Install composer dependencies
+        uses: "ramsey/composer-install@v1"
+
+      - name: Run phpstan on src
+        run: vendor/bin/php-cs-fixer fix src -vvv --dry-run
+
+      - name: Run phpstan on tests
+        run: vendor/bin/php-cs-fixer fix tests -vvv --dry-run
+
+
+  phpunit:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version:
+          - "8.0"
+        deps:
+          - "highest"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: pcov
+
+      - name: Install composer dependencies
+        uses: "ramsey/composer-install@v1"
+
+      - name: Run PHPUnit with coverage
+        run: |
+          mkdir -p build/logs
+          vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+        if: ${{ matrix.php-version == '8.0' }}
+
+      - name: Upload coverage report to Coveralls
+        run: vendor/bin/php-coveralls --coverage_clover=build/logs/clover.xml -v
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ matrix.php-version == '8.0' }}
