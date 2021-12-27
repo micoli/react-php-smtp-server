@@ -13,8 +13,8 @@
         "react/event-loop": "^1.1",
         "react/http": "^0.8.3",
         "react/socket": "^1.6",
-        "symfony/event-dispatcher": "5.2.*",
-        "symfony/uid": "5.2.*"
+        "symfony/event-dispatcher": "6.0.*",
+        "symfony/uid": "6.0.*"
     },
     "require-dev": {
         "mockery/mockery": "^1.4",
@@ -25,7 +25,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "autoload": {
         "psr-4": {

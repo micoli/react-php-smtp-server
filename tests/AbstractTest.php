@@ -12,13 +12,7 @@ abstract class AbstractTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-
     protected function setUp(): void
     {
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
     }
 }

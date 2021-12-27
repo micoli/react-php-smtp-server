@@ -6,22 +6,20 @@ namespace Micoli\Tests\Smtp;
 
 use Micoli\Smtp\Server\Authentication\AuthenticationDataInterface;
 use Micoli\Smtp\Server\Authentication\AuthenticationMethodInterface;
-use Micoli\Smtp\Server\Authentication\IdentityValidator;
 use Micoli\Smtp\Server\Authentication\IdentityValidatorInterface;
 use Micoli\Smtp\Server\Server;
 use Micoli\Smtp\Server\SmtpSession\SmtpSessionFactory;
 use Micoli\Smtp\Server\SmtpSession\StateService;
+use Micoli\Tests\TestLogger;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\Test\TestLogger;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use React\Socket\ConnectionInterface;
 use React\Socket\ServerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Micoli\Smtp\Server\SmtpSession\SmtpSessionConfiguration;
-use Symfony\Component\HttpKernel\Log\Logger;
 use Micoli\Smtp\Server\Authentication;
 use Micoli\Smtp\Server\Command;
 
@@ -57,7 +55,7 @@ trait SessionTestTrait
         $this->server = new Server(
             new SmtpSessionFactory(
                 $this->dispatcher,
-                new class($logger) implements IdentityValidatorInterface {
+                new class ($logger) implements IdentityValidatorInterface {
                     private LoggerInterface $logger;
 
                     public function __construct(LoggerInterface $logger)
